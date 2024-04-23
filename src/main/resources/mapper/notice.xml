@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ac.aircamp.dao.NoticeDao">
+
+<select id="getNoticeList" parameterType="search" resultType="notice">
+		SELECT * 
+		FROM aircamp.notice
+		<where>
+		    <if test="keyword != null" >
+		        OR no_subject LIKE CONCAT('%', #{keyword}, '%')
+		    </if>
+		    <if test="keyword != null" >
+		        OR no_content LIKE CONCAT('%', #{keyword}, '%')
+		    </if>
+		</where>
+		ORDER BY no_no DESC
+		LIMIT #{startRow}, #{limit}
+	</select>
+	
+	<select id="getNoticeCount" parameterType="search" resultType="int">
+		SELECT COUNT(*)
+		FROM aircamp.notice
+		<where>
+		    <if test="keyword != null" >
+		     	 OR no_subject LIKE CONCAT('%', #{keyword}, '%')
+		    </if>
+		    <if test="keyword != null" >
+		    	 OR no_content LIKE CONCAT('%', #{keyword}, '%')
+		    </if>
+ 	 	</where>
+	</select>
+	
+	<insert id="insertNotice" parameterType="notice">
+		INSERT into aircamp.notice(no_subject, no_content, no_date, no_level, no_ref, no_step)
+		values(#{no_subject}, #{no_content}, NOW(), 0, 0, 0)
+	</insert> 
+	
+	<select id="getNoticeOne" parameterType="int" resultType="notice" >
+		SELECT *
+		from aircamp.notice
+		WHERE no_no = ${no_no}	
+	</select>
+	
+	<update id="noticeReadcount" parameterType="int">
+		UPDATE notice
+		SET no_readcount = no_readcount+1
+		WHERE no_no = ${no_no}
+		
+	</update>
+	
+	<select id="getMainNoticeList"  resultType="notice" >
+		SELECT *
+		from aircamp.notice
+		order by no_no desc
+		limit 5	
+	</select>
+	
+	<update id="updateNotice" parameterType="notice">
+      UPDATE notice
+      SET no_subject = #{no_subject}, no_content = #{no_content}
+      WHERE no_no = #{no_no}
+   </update> 
+	
+	
+	<delete id="deleteNotice" parameterType="int">
+		delete from notice where no_no=${no_no}
+	</delete>
+</mapper>

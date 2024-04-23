@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ac.aircamp.dao.TourDao">
+	
+<select id="searchTourCount" parameterType="search" resultType="int">
+		SELECT COUNT(*)
+		FROM aircamp.tour
+  		<where>
+		    <if test="addr1 != null and addr1 != '전체'" >
+		     	 AND tour_addr1 LIKE CONCAT('%', #{addr1}, '%')
+		    </if>
+		    <if test="addr2 != null and addr2 != '전체'">
+		    	  AND tour_addr1 LIKE CONCAT('%', #{addr2}, '%')
+		    </if>
+		    <if test="keyword != null and keyword != null">
+		    	  AND tour_name LIKE CONCAT('%', #{keyword}, '%')
+		    </if>
+ 	 	</where>
+	</select>
+	
+	<select id="searchTourList" parameterType="search" resultType="tour">
+		SELECT *
+		FROM aircamp.tour
+  		<where>
+		    <if test="addr1 != null and addr1 != '전체'" >
+		     	 AND tour_addr1 LIKE CONCAT('%', #{addr1}, '%')
+		    </if>
+		    <if test="addr2 != null and addr2 != '전체'">
+		    	  AND tour_addr1 LIKE CONCAT('%', #{addr2}, '%')
+		    </if>
+		    <if test="keyword != null and keyword != null">
+		    	  AND tour_name LIKE CONCAT('%', #{keyword}, '%')
+		    </if>
+ 	 	</where>
+ 	 	LIMIT #{startRow}, #{limit}
+
+	</select>
+	
+	<select id="getTourOne" parameterType="int" resultType="tour">
+		SELECT *
+		FROM aircamp.tour
+		WHERE tour_id = #{tour_id}
+	</select>
+	</mapper>

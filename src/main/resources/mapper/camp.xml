@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ac.aircamp.dao.CampDao">
+
+	<select id="searchCampCount" parameterType="search" resultType="int">
+		SELECT COUNT(*)
+		FROM aircamp.camp
+  		<where>
+		    <if test="addr1 != null and addr1 != '전체'" >
+		     	 AND camp_do_name LIKE CONCAT('%', #{addr1}, '%')
+		    </if>
+		    <if test="addr2 != null and addr2 != '전체'">
+		    	  AND camp_city_name LIKE CONCAT('%', #{addr2}, '%')
+		    </if>
+		    <if test="keyword != null and keyword != null">
+		    	  AND camp_name LIKE CONCAT('%', #{keyword}, '%')
+		    </if>
+ 	 	</where>
+	</select>
+	
+	<select id="searchCampList" parameterType="search" resultType="camp">
+	  SELECT *
+	  FROM aircamp.camp
+  		<where>
+		    <if test="addr1 != null and addr1 != '전체'" >
+		     	 AND camp_do_name LIKE CONCAT('%', #{addr1}, '%')
+		    </if>
+		    <if test="addr2 != null and addr2 != '전체'">
+		    	  AND camp_city_name LIKE CONCAT('%', #{addr2}, '%')
+		    </if>
+		    <if test="keyword != null and keyword != null">
+		    	  AND camp_name LIKE CONCAT('%', #{keyword}, '%')
+		    </if>
+ 	 	</where>
+ 	 	LIMIT #{startRow}, #{limit}
+	</select>
+	
+	<select id="getCampOne" parameterType="int" resultType="camp">
+		SELECT *
+		FROM aircamp.camp
+		WHERE camp_no = #{camp_no}
+	</select>
+	
+</mapper>

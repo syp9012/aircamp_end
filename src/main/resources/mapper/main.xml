@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ac.aircamp.dao.MainDao">
+
+	<select id="getRecommendLoc" resultType="String">
+		SELECT distinct camp_do_name
+		FROM aircamp.camp
+		JOIN (
+    		SELECT sw.*, d.*
+    		FROM aircamp.short_weather sw
+			INNER JOIN aircamp.dust d ON 
+				CASE 
+		        	WHEN d.dust_loc = '서울' THEN sw.sw_loc = '서울시'
+		        	WHEN d.dust_loc = '제주' THEN sw.sw_loc = '제주도'
+		        	WHEN d.dust_loc = '전남' THEN sw.sw_loc = '전라남도'
+		        	WHEN d.dust_loc = '전북' THEN sw.sw_loc = '전라북도'
+		        	WHEN d.dust_loc = '광주' THEN sw.sw_loc = '광주시'
+		        	WHEN d.dust_loc = '경남' THEN sw.sw_loc = '경상남도'
+		        	WHEN d.dust_loc = '경북' THEN sw.sw_loc = '경상북도'
+		        	WHEN d.dust_loc = '울산' THEN sw.sw_loc = '울산시'
+		        	WHEN d.dust_loc = '대구' THEN sw.sw_loc = '대구시'
+		        	WHEN d.dust_loc = '부산' THEN sw.sw_loc = '부산시'
+		        	WHEN d.dust_loc = '충남' THEN sw.sw_loc = '충청남도'
+		        	WHEN d.dust_loc = '충북' THEN sw.sw_loc = '충청북도'
+		        	WHEN d.dust_loc = '세종' THEN sw.sw_loc = '세종시'
+		        	WHEN d.dust_loc = '대전' THEN sw.sw_loc = '충청남도'
+		        	WHEN d.dust_loc IN ('영동', '영서') THEN sw.sw_loc = '강원도'
+		        	WHEN d.dust_loc IN ('경기남부', '경기북부') THEN sw.sw_loc = '경기도'
+		        	WHEN d.dust_loc = '인천' THEN sw.sw_loc = '인천시'
+	        	END
+       	WHERE sw.sw_date = CURDATE() AND sw.sw_time = 1500
+       	AND d.dust_date = CURDATE()
+       	ORDER BY sw.sw_rainper ASC, 
+       		CASE 
+            	WHEN d.dust_grade = '좋음' THEN 1 
+	            WHEN d.dust_grade = '보통' THEN 2 
+	            ELSE 3 
+            END
+           LIMIT 1
+		) AS loc ON aircamp.camp.camp_do_name LIKE CONCAT('%', loc.sw_loc, '%')
+	</select>
+	
+	<select id="getCampList" resultType="camp">
+		SELECT *
+		FROM aircamp.camp
+		WHERE camp_do_name LIKE CONCAT('%', #{camp_do_name}, '%')
+		AND camp_image != ''
+		LIMIT 10
+	</select>
+	
+	<select id="getTourList" parameterType="string" resultType="tour">
+	    SELECT *
+	    FROM aircamp.tour
+	    WHERE tour_addr1 LIKE CONCAT('%', #{camp_do_name}, '%')
+	    AND tour_images != ''
+		LIMIT 10
+	</select>	
+	</mapper>

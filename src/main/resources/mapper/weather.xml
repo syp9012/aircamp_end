@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ac.aircamp.dao.WeatherDao">
+	<select id="getShortWeatherList" parameterType="String" resultType="ShortWeather">
+		SELECT * FROM aircamp.short_weather sw
+		WHERE sw.sw_time = 1500 
+		AND sw.sw_loc = 
+		CASE #{loc}
+		        WHEN '서울' THEN '서울시'
+		        WHEN '제주' THEN '제주도'
+		        WHEN '전남' THEN '전라남도'
+		        WHEN '전북' THEN '전라북도'
+		        WHEN '광주' THEN '광주시'
+		        WHEN '경남' THEN '경상남도'
+		        WHEN '경북' THEN '경상북도'
+		        WHEN '울산' THEN '울산시'
+		        WHEN '대구' THEN '대구시'
+		        WHEN '부산' THEN '부산시'
+		        WHEN '충남' THEN '충청남도'
+		        WHEN '충북' THEN '충청북도'
+		        WHEN '세종' THEN '세종시'
+		        WHEN '대전' THEN '대전시'
+		        WHEN '강원도' THEN '강원도'
+		        WHEN '경기' THEN '경기도'
+		        WHEN '인천' THEN '인천시'
+		        ELSE #{loc}
+		    END
+	</select>
+	<select id="getMidWeatherList" parameterType="String" resultType="MidWeather">
+		SELECT * FROM aircamp.middle_weather 
+		WHERE mw_loc =
+		    CASE #{loc}
+		        WHEN '서울' THEN '서울시'
+		        WHEN '제주' THEN '제주도'
+		        WHEN '전남' THEN '전라남도'
+		        WHEN '전북' THEN '전라북도'
+		        WHEN '광주' THEN '광주시'
+		        WHEN '경남' THEN '경상남도'
+		        WHEN '경북' THEN '경상북도'
+		        WHEN '울산' THEN '울산시'
+		        WHEN '대구' THEN '대구시'
+		        WHEN '부산' THEN '부산시'
+		        WHEN '충남' THEN '충청남도'
+		        WHEN '충북' THEN '충청북도'
+		        WHEN '세종' THEN '세종시'
+		        WHEN '대전' THEN '대전시'
+		        WHEN '강원도' THEN '강원도'
+		        WHEN '경기' THEN '경기도'
+		        WHEN '인천' THEN '인천시'
+		        ELSE #{loc}
+		    END
+	</select>
+	<select id="getDustList" parameterType="String" resultType="Dust">
+		SELECT * FROM aircamp.dust 
+		WHERE dust_loc = 
+		    CASE #{loc}
+		        WHEN '강원도' THEN '영동'
+		        WHEN '경기도' THEN '경기남부'
+		        ELSE #{loc}
+		    END
+		ORDER BY dust_date
+	</select>
+	
+</mapper>

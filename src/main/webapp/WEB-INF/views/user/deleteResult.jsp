@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>에어캠프</title>
+</head>
+<body>
+	<script>
+		if(${result}===1){
+			alert("공지사항이 삭제되었습니다.");
+			location.href="/notice/list?page=${search.page}&keyword=${search.keyword}";
+		}else if(${result}===-1){
+			alert("비밀번호가 틀렸습니다");
+			history.go(-1);
+		}
+	</script>
+</body>
+</html>

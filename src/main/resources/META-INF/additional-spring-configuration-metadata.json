@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "spring.mail.hostSMTPid",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.hostSMTPid'"
+  },
+  {
+    "name": "spring.mail.hostSMTPpwd",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.hostSMTPpwd'"
+  },
+  {
+    "name": "spring.api.service-key",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.api.service-key'"
+  }
+]}

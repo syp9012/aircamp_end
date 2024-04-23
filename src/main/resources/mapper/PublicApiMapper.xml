@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ac.aircamp.dao.PublicApiDao">
+	<!-- 중기 날씨 -->
+	<delete id="mwDelete" >
+		DELETE 
+		FROM middle_weather WHERE mw_no>=1;
+	</delete>
+
+	<insert id="mwInsert" parameterType="midweather">
+		INSERT INTO middle_weather(mw_mintep, mw_maxtep, mw_loc, mw_date)
+		VALUES (#{mw_mintep}, #{mw_maxtep}, #{mw_loc}, #{mw_date})
+	</insert>
+	
+	<update id="mwUpdate" parameterType="midweather">
+		UPDATE middle_weather 
+		SET mw_rainper=#{mw_rainper} WHERE mw_loc=#{mw_loc} AND mw_date=#{mw_date}
+	</update>
+	
+	<!-- 단기 날씨 -->
+	<delete id="swDelete" >
+		DELETE FROM short_weather WHERE sw_no>=1
+	</delete>
+	
+	<insert id="swInsert" >
+		INSERT INTO short_weather(sw_rainper, sw_temp, sw_loc, sw_date, sw_time)
+		VALUES (#{sw_rainper}, #{sw_temp}, #{sw_loc}, #{sw_date}, #{sw_time})
+	</insert>
+	
+	<update id="swUpdate" >
+        UPDATE short_weather
+        SET sw_temp=#{sw_temp}
+        WHERE sw_date = #{sw_date} AND sw_time = #{sw_time} AND sw_loc = #{sw_loc}
+    </update>
+    
+    <!-- 미세먼지 -->
+    <delete id="dustDelete">
+		DELETE 
+		FROM aircamp.dust
+	</delete>
+	
+	<insert id="dustInsert" parameterType="list">
+		INSERT INTO dust(dust_loc, dust_grade, dust_date)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+		(#{item.dust_loc}, #{item.dust_grade}, #{item.dust_date})
+		</foreach>
+	</insert>
+		
+	<!-- 관광지 -->
+	<insert id="tourInsert" parameterType="tour">
+		INSERT INTO tour
+		 VALUES
+		   (#{tour_id}, #{tour_name}, #{tour_url}, #{tour_tel},
+			#{tour_city_name}, #{tour_addr1}, #{tour_addr2}, #{tour_zipcode}, #{tour_locx},
+			#{tour_locy}, #{tour_desc}, #{tour_babycarry}, #{tour_animal_able}, #{tour_age_able},
+			#{tour_heritage1}, #{tour_heritage2}, #{tour_heritage3}, #{tour_infocenter}, #{tour_open_date},
+			#{tour_parking}, #{tour_dayoff}, #{tour_usetime},#{tour_images})
+	</insert>
+	
+	<!-- 캠핑장 -->
+	<insert id="campInsert" parameterType="list">
+		INSERT INTO camp_loc (camp_name, camp_intro, camp_desc,camp_scale, camp_insurance, camp_owner, camp_dayoff_start, camp_dayoff_end, camp_feature, camp_type, camp_nature_type,
+		 camp_do_name, camp_city_name, camp_zipcode, camp_addr1, camp_addr2, camp_locx, camp_locy, camp_tel, camp_url, camp_reserve_url, camp_reserve_type, 
+		 camp_normal_no, camp_car_no, camp_glamp_no, camp_carav_no, camp_glamp_inner_fclty, camp_carav_inner_fclty, camp_open_season, camp_open_date, camp_toilet_no, camp_shower_no, camp_sink_no, camp_add_fclty, camp_able_fclty, camp_equip_rent, camp_able_animal, camp_image)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+		(#{item.facltNm}, #{item.lineIntro}, #{item.intro}, #{item.allar},#{item.insrncAt},#{item.facltDivNm}, #{item.hvofBgnde}, #{item.hvofEnddle}, #{item.featureNm}, #{item.induty}, #{item.lctCl},
+		#{item.doNm}, #{item.sigunguNm}, #{item.zipcode}, #{item.addr1}, #{item.addr2 }, #{item.mapX }, #{item.mapY }, #{item.tel}, #{item.homepage}, #{item.resveUrl}, #{item.resveCl}, #{item.gnrlSiteCo}, #{item.autoSiteCo},
+		#{item.glampSiteCo}, #{item.caravSiteCo}, #{item.indvdlCaravSiteCo}, #{item.caravInnerFclty}, #{item.operPdCl}, #{item.operDeCl}, #{item.toiletCo}, #{item.swrmCo}, #{item.wtrplCo}, #{item.sbrsCl },
+		#{item.posblFcltyCl}, #{item.eqpmnLendCl}, #{item.animalCmgCl}, #{item.firstImageUrl} )
+		 </foreach>
+	</insert>
+	
+	
+</mapper>

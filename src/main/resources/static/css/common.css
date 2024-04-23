@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+/*
+ * File       : style.css
+ * Author     : HNG
+ * Date       : 2024.04.12
+*/
+
+/* color reset : 컬러초기화 */
+:root {
+    --wh: #fff;
+    --bk: #101010;
+    --lgray: #f5f5f5;
+    --dgray: #e5e5e5;
+    --main: #19E245;
+}
+body {background: var(--wh);}
+body,a,button,input,label,textarea {color: var(--bk);}
+
+/* common class : 공용클래스 */
+main {margin:7rem auto !important; min-height:45rem;}
+.wrap {width: 96%; max-width: 1200px; margin: 0 auto;}
+.sound-only {position: absolute; left: -9999em;}
+.ff-incheon {font-family: 'INCHEON';}
+section.wrap + section.wrap {margin:10rem auto;}
+span.maincolor {color:var(--main);}
+
+/* header : 헤더 */
+#ac-hd {position: sticky; left: 0; top: 0; border-bottom: 1px solid var(--dgray); background-color: var(--wh); z-index: 100;}
+#ac-hd .wrap {display: flex; justify-content: space-between; align-items: center;}
+#ac-hd .wrap .logo {width: 14rem;}
+#ac-hd .wrap .logo a {display: block; width: 100%;}
+#ac-hd .wrap .logo a img {width: 100%;}
+#ac-hd .wrap .gnb-wrap .gnb {display: flex;}
+#ac-hd .wrap .gnb-wrap .gnb .depth1 {position: relative;}
+#ac-hd .wrap .gnb-wrap .gnb .depth1 > a {display: block; padding: 0 3.9rem; line-height: 8rem; font-weight: 500; transition:.3s;}
+#ac-hd .wrap .gnb-wrap .gnb .depth1 > a:hover {color:var(--main);}
+#ac-hd .wrap .util-menu {line-height: 5rem;}
+#ac-hd .wrap .util-menu a {display:inline-block; margin-left:1rem; font-weight:500; line-height:8rem;}
+
+/* footer : 푸터 */
+#ac-ft {border-top: 1px solid var(--dgray);}
+#ac-ft .wrap {display: flex; padding: 5rem 0; flex-direction: column; gap: 2rem;}
+#ac-ft .wrap > div {display: flex; justify-content: space-between;}
+#ac-ft .wrap .ft-util .menu li {display: inline-block;}
+#ac-ft .wrap .ft-util .menu li::after {content: ''; display: inline-block; width: 2px; height: 1.2rem; margin: 0 5px 0 10px; background-color: var(--dgray);}
+#ac-ft .wrap .ft-util .menu li:last-of-type::after {display: none;}
+#ac-ft .wrap .ft-util .logo {display: inline-block; width: 10rem;}
+#ac-ft .wrap .ft-util .logo img {width: 100%;}
+#ac-ft .wrap .ft-info .box1 div.cs a {display: block; font-size: 2rem; font-weight: 700;}
+#ac-ft .wrap .ft-info .box2 div {text-align: right;}
+#ac-ft .wrap .ft-util .menu li a,
+#ac-ft .wrap .ft-info .box div,
+#ac-ft .wrap .ft-info .box div a {color: var(--bk); font-weight: 500;}
